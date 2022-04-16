@@ -7,7 +7,12 @@ const FeaturedMovies = ({item}) => {
     for(let i in item.genres) {
         genres.push(item.genres[i].name)
     }
+    let description = item.overview
+    if(description.length > 200){
+        description = description.substring(0, 200)+"..."
+    }
 
+    console.log(item);
     return ( 
         <section className="featured" style={{
             backgroundSize: 'cover',
@@ -17,7 +22,7 @@ const FeaturedMovies = ({item}) => {
             <div className="featured-vertical">
                 <div className="featured-horizontal">
                     <div className="featured-name">
-                        {item.original_name}
+                        {item.name}
                     </div>
                     <div className="featured-info">
                         <div className="featured-points">{item.vote_average} pontos</div>
@@ -25,14 +30,14 @@ const FeaturedMovies = ({item}) => {
                         <div className="featured-seasons">{item.number_of_seasons} temporada{item.number_of_seasons !== 1 ? 's' : ''}</div>  
                     </div>
                     <div className="featured-description">
-                        {item.overview}
+                        {description}
                     </div>
                     <div className="featured-buttons">
                         <a className="featured-watchButton" href={`/watch/${item.id}`}> ▶ Assistir</a>
                         <a className="featured-myListButton" href={`/myList/add/${item.id}`}>+ Minha Lista</a>
                     </div>
                     <div className="featured-genres">
-                        <strong>Gêneros:</strong>{genres.join(', ')}
+                        <strong>Gêneros:</strong> {genres.join(', ')}
                     </div>
                 </div>
             </div>

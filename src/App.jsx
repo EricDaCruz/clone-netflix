@@ -5,11 +5,13 @@ import './App.css'
 /* Components */
 import MovieRow from './components/MovieRow';
 import FeaturedMovies from './components/FeaturedMovies';
+import Header from './components/Header';
 
 const App = () => {
 
   const [movieList, setMovieList] = useState([])
   const [featuredData, setFeaturedData] = useState(null)
+  const [blackHeader, setBlackHeader] = useState(false)
 
   useEffect (()=>{
     const loadAll = async () => {
@@ -26,9 +28,23 @@ const App = () => {
   
     loadAll()
   }, [])
+  useEffect (() => {
+    const scrollListener = () =>{
+      if(window.scrollY > 50){
+        setBlackHeader(true)
+      }else{
+        setBlackHeader(false)
+      }
+    }
+    window.addEventListener('scroll', scrollListener);
+    return () => {
+      window.removeEventListener('scroll', scrollListener);
+    }
+  },[])
 
   return ( 
     <div className="page">
+      <Header black={blackHeader}/>
       {featuredData && 
         <FeaturedMovies item={featuredData} />
       }
@@ -37,6 +53,11 @@ const App = () => {
           <MovieRow key={key} title={item.title} items={item.items}/>
         ))}
       </section>
+      {movieList.length <= 0 &&
+        <div className="loading">
+          <img src="http://cdn.shopify.com/s/files/1/0131/9233/1328/products/love-netflix_1200x1200.gif?v=1602081497" alt="Carregando" />
+        </div>
+      }
     </div>
    );
 }
