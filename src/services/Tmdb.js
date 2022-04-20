@@ -1,4 +1,4 @@
-const API_KEY = "edbf41d412f305a2a87a9b62dd214f35";
+const API_KEY = import.meta.env.VITE_APP_API_KEY;
 const API_BASE = "https://api.themoviedb.org/3";
 
 const basicFetch = async (endPoint) =>{
